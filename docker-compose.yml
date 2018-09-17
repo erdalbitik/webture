@@ -1,0 +1,40 @@
+version: '2.1'
+services:
+
+  config:
+    environment:
+      CONFIG_SERVICE_PASSWORD: 123456
+      MONGODB_PASSWORD: 123456
+    build: config-server
+    ports:
+      - 8888:8888
+
+  registry:
+    environment:
+      CONFIG_SERVICE_PASSWORD: 123456
+    build: registry-server
+    ports:
+      - 8762:8762
+    restart: on-failure:5
+    links:
+      - config
+      
+  mongodb:
+    environment:
+      INIT_DUMP: fileProcess-dump.js
+      MONGODB_PASSWORD: 123456
+    build: mongodb
+    ports:
+      - 27017:27017
+      
+  urlreceiver:
+    environment:
+      CONFIG_SERVICE_PASSWORD: 123456
+    build: urlreceiver
+    ports:
+      - 8090:8090
+    restart: on-failure:5
+    links:
+      - config
+      - registry
+      - mongodb
