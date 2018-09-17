@@ -1,6 +1,12 @@
 version: '2.1'
 services:
 
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672" #JMS
+      - "15672:15672" #Management - default user:pass = guest:guest
+
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: 123456
@@ -15,6 +21,7 @@ services:
     build: registry-server
     ports:
       - 8762:8762
+      - 8080:8080
     restart: on-failure:5
     links:
       - config
@@ -38,3 +45,4 @@ services:
       - config
       - registry
       - mongodb
+      - rabbitmq
