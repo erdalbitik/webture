@@ -19,5 +19,6 @@
 		<module>config-server</module>
 		<module>registry-server</module>
 		<module>producer</module>
-	</modules>
+        <module>consumer</module>
+    </modules>
 </project>

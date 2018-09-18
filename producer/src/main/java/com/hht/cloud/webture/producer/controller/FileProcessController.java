@@ -3,6 +3,7 @@ package com.hht.cloud.webture.producer.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.hht.cloud.webture.producer.model.ScreenshotRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hht.cloud.webture.producer.model.FileProcess;
 import com.hht.cloud.webture.producer.repository.FileProcessRepository;
-import com.hht.cloud.webture.producer.service.MessageService;
+import com.hht.cloud.webture.producer.service.MessagePublisher;
+import java.util.UUID;
 
 @RestController
 public class FileProcessController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileProcessController.class);
-	
+
 	@Autowired
 	private FileProcessRepository repository;
 	
 	@Autowired
-	private MessageService messageService;
+	private MessagePublisher messagePublisher;
 	
 	@GetMapping("/")
     public List<FileProcess> list() {
@@ -39,8 +41,12 @@ public class FileProcessController {
 		fp.setCaptureUrl(dto.getUrl());
 		fp.setCreateDate(new Date());
 		fp.setFileType(dto.getFileType());
+		fp.setMessageId(UUID.randomUUID().toString());
 		fp = repository.insert(fp);
-		boolean sentToQueue = messageService.sendQueueMessage(fp);
+
+		ScreenshotRequest sr = new ScreenshotRequest(fp.getMessageId(),fp.getCaptureUrl());
+
+		boolean sentToQueue = messagePublisher.sendQueueMessage(sr);
 		if(!sentToQueue) {
 			repository.delete(fp);
 			LOGGER.info("Message rollbacked!");
