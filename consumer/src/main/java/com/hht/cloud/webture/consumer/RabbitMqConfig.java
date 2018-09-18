@@ -1,5 +1,7 @@
-package com.hht.cloud.webture.producer;
+package com.hht.cloud.webture.consumer;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -61,6 +63,7 @@ public class RabbitMqConfig implements RabbitListenerConfigurer {
 	MessageHandlerMethodFactory messageHandlerMethodFactory() {
 		DefaultMessageHandlerMethodFactory messageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
 		messageHandlerMethodFactory.setMessageConverter(consumerJackson2MessageConverter());
+
 		return messageHandlerMethodFactory;
 	}
 
@@ -71,7 +74,11 @@ public class RabbitMqConfig implements RabbitListenerConfigurer {
 
 	@Bean
 	public MappingJackson2MessageConverter consumerJackson2MessageConverter() {
-		return new MappingJackson2MessageConverter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        MappingJackson2MessageConverter mappingJackson2MessageConverter =  new MappingJackson2MessageConverter();
+        mappingJackson2MessageConverter.setObjectMapper(objectMapper);
+        return mappingJackson2MessageConverter;
 	}
 
 }

@@ -92,4 +92,11 @@ public class FileProcess {
 		this.processDate = processDate;
 	}
 
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
 }
