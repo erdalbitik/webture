@@ -34,10 +34,10 @@ services:
     ports:
       - 27017:27017
       
-  urlreceiver:
+  producer:
     environment:
       CONFIG_SERVICE_PASSWORD: 123456
-    build: urlreceiver
+    build: producer
     ports:
       - 8090:8090
     restart: on-failure:5

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: urlreceiver
+    name: producer
   cloud:
     config:
       uri: http://config:8888

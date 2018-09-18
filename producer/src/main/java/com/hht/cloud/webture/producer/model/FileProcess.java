@@ -1,4 +1,4 @@
-package com.hht.cloud.webture.urlreceiver.model;
+package com.hht.cloud.webture.producer.model;
 
 import java.util.Date;
 

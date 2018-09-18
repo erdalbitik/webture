@@ -1,4 +1,4 @@
-package com.hht.cloud.webture.urlreceiver.controller;
+package com.hht.cloud.webture.producer.controller;
 
 public class UrlDTO {
 	

@@ -1,4 +1,4 @@
-package com.hht.cloud.webture.urlreceiver.controller;
+package com.hht.cloud.webture.producer.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hht.cloud.webture.urlreceiver.model.FileProcess;
-import com.hht.cloud.webture.urlreceiver.repository.FileProcessRepository;
-import com.hht.cloud.webture.urlreceiver.service.MessageService;
+import com.hht.cloud.webture.producer.model.FileProcess;
+import com.hht.cloud.webture.producer.repository.FileProcessRepository;
+import com.hht.cloud.webture.producer.service.MessageService;
 
 @RestController
 public class FileProcessController {

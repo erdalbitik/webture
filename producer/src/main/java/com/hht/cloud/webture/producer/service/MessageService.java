@@ -1,4 +1,4 @@
-package com.hht.cloud.webture.urlreceiver.service;
+package com.hht.cloud.webture.producer.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hht.cloud.webture.urlreceiver.model.FileProcess;
+import com.hht.cloud.webture.producer.model.FileProcess;
 
 @Service
 public class MessageService {

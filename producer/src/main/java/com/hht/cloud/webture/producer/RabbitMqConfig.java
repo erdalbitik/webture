@@ -1,4 +1,4 @@
-package com.hht.cloud.webture.urlreceiver;
+package com.hht.cloud.webture.producer;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

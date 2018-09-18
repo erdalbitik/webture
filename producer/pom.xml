@@ -78,7 +78,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>urlreceiver</finalName>
+					<finalName>producer</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
