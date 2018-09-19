@@ -6,3 +6,5 @@
 **/.settings
 target/
 **/target
+**/node_modules
+**/.mvn
