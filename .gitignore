@@ -8,3 +8,6 @@ target/
 **/target
 **/node_modules
 **/.mvn
+**/credentials.json
+**/token.json
+**/*.log

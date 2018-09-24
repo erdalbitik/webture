@@ -2,8 +2,8 @@ package com.hht.cloud.webture.producer.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import com.hht.cloud.webture.producer.model.ScreenshotRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hht.cloud.webture.producer.model.FileProcess;
+import com.hht.cloud.webture.producer.model.ScreenshotRequest;
 import com.hht.cloud.webture.producer.repository.FileProcessRepository;
-import com.hht.cloud.webture.producer.service.MessagePublisher;
-import java.util.UUID;
+import com.hht.cloud.webture.producer.service.MessageService;
 
 @RestController
 public class FileProcessController {
@@ -28,7 +28,7 @@ public class FileProcessController {
 	private FileProcessRepository repository;
 	
 	@Autowired
-	private MessagePublisher messagePublisher;
+	private MessageService messageService;
 	
 	@GetMapping("/")
     public List<FileProcess> list() {
@@ -46,7 +46,7 @@ public class FileProcessController {
 
 		ScreenshotRequest sr = new ScreenshotRequest(fp.getMessageId(),fp.getCaptureUrl());
 
-		boolean sentToQueue = messagePublisher.sendQueueMessage(sr);
+		boolean sentToQueue = messageService.sendQueueMessage(sr);
 		if(!sentToQueue) {
 			repository.delete(fp);
 			LOGGER.info("Message rollbacked!");

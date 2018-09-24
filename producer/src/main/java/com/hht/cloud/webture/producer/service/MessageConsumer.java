@@ -1,14 +1,16 @@
 package com.hht.cloud.webture.producer.service;
 
-import com.hht.cloud.webture.producer.RabbitMqConfig;
-import com.hht.cloud.webture.producer.model.FileProcess;
-import com.hht.cloud.webture.producer.model.ScreenshotResponse;
-import com.hht.cloud.webture.producer.repository.FileProcessRepository;
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.hht.cloud.webture.producer.model.FileProcess;
+import com.hht.cloud.webture.producer.model.ScreenshotResponse;
+import com.hht.cloud.webture.producer.repository.FileProcessRepository;
 
 @Component
 public class MessageConsumer {
@@ -18,7 +20,7 @@ public class MessageConsumer {
     @Autowired
     private FileProcessRepository repository;
 
-    @RabbitListener(queues = RabbitMqConfig.QUEUE_MESSAGES)
+    @RabbitListener(queues = "turn-queue")
     public void handleMessage(final ScreenshotResponse sr) {
 
         logger.info("Message Received : "+ sr);
@@ -28,9 +30,10 @@ public class MessageConsumer {
         logger.info("Message Received - Screenshot URL is: "+ sr.getScreenshotUrl());
 
         FileProcess fp = repository.findByMessageId(sr.getMessageId());
-
-        fp.setFileUrl(sr.getScreenshotUrl());
-        repository.save(fp);
+        if(Objects.nonNull(fp)) {
+        	fp.setFileUrl(sr.getScreenshotUrl());
+            repository.save(fp);
+        }
 
     }
 

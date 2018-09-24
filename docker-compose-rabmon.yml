@@ -1,0 +1,16 @@
+version: '2.1'
+services:
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672" #Management - default user:pass = guest:guest
+
+  mongodb:
+    environment:
+      INIT_DUMP: fileProcess-dump.js
+      MONGODB_PASSWORD: 123456
+    build: mongodb
+    ports:
+      - 27017:27017
